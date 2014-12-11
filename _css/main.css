@@ -138,6 +138,11 @@ body{
     border-color: #DD4B39;
     color: white;
 }
+.vk .userImg,.vk .userName,.vk .postText,.vk .postTime{
+    background-color: #45668e;
+    border-color: #45668e;
+    color: white;
+}
 
 /* ==== Other === */
 .postTimeValue{
@@ -169,7 +174,7 @@ input {
     font-family: "Avant Garde",Avantgarde,"Century Gothic",CenturyGothic,AppleGothic,sans-serif; 
     background-color: white;
 }
-.userInput #instagram, .userInput #googleplus, .userInput #twitter{
+.userInput #instagram, .userInput #googleplus, .userInput #twitter,.userInput #vk{
     font-size: 0.8em;
 }  
 .instagramLabel{
@@ -184,6 +189,11 @@ input {
 }
 .twitterLabel{
     background-color: #0084B4;
+    margin: 0.5em;
+    padding: 0.2em;
+}
+.vkLabel{
+    background-color: #45668e;
     margin: 0.5em;
     padding: 0.2em;
 }
@@ -304,7 +314,7 @@ input {
     .userInput{
         font-size: 2em;
     }
-    .userInput #instagram, .userInput #googleplus, .userInput #twitter{
+    .userInput #instagram, .userInput #googleplus, .userInput #twitter,.userInput #vk{
         font-size: 0.7em;
     } 
     .wrongInput{
@@ -339,7 +349,7 @@ input {
     .userInput{
         font-size: 1.5em;
     }
-    .userInput #instagram, .userInput #googleplus, .userInput #twitter{
+    .userInput #instagram, .userInput #googleplus, .userInput #twitter,.userInput #vk{
         font-size: 0.6em;
     }  
     .stopButton, .updateButton, .downloadButton{
