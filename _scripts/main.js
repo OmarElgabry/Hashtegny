@@ -8,9 +8,9 @@ var intervalAnimationHandler;
 var intervalUpdateTimeHandler;
 
 var first_animation = false, update=false;
-var instagram, googleplus, twitter;
-var instagram_lastID=0, googleplus_lastID=0, twitter_lastID=0;
-var instagram_input, googleplus_input, twitter_input;
+var instagram, googleplus, twitter, vk;
+var instagram_lastID=0, googleplus_lastID=0, twitter_lastID=0, vk_lastID=0;
+var instagram_input, googleplus_input, twitter_input, vk_input;
 var timeNow, timeUpdate = 30000;//every 0.5min
 var postInfo = {num:0};
 var imgExist;
@@ -55,7 +55,7 @@ function UpdateTime(){
 }
 function getTime(time){
     var date;
-     if(postInfo.sm == "instagram"){
+     if(postInfo.sm == "instagram" || postInfo.sm == "vk"){
         date = new Date(timeNow - (parseInt(time) * 1000));
     }else{
         date = new Date(timeNow - Date.parse(time));
@@ -137,8 +137,8 @@ function reset(){
     clearInterval(intervalUpdateTimeHandler);
     first_animation = false;
     update = false;
-    instagram_lastID = googleplus_lastID = twitter_lastID = 0;
-    instagram_input = googleplus_input = twitter_input = "";
+    instagram_lastID = googleplus_lastID = twitter_lastID = vk_lastID =  0;
+    instagram_input = googleplus_input = twitter_input = vk_input = "";
     postInfo.num = 0;
     $("#userInput").slideDown(1000);
 }
@@ -204,9 +204,14 @@ $(document).ajaxStop(function () {
 });
 
 //------------- Wrapping Elemnts -------------
+function encodePostText(str){
+    return $('<div />').text(str).html();
+}
 function wrappingData(){
+    postInfo.msg = encodePostText(postInfo.msg);
     var str = postInfo.msg.substr(0,300);
-        if(str.length >= 300) str+="...";
+    if(str.length >= 300) str+="...";
+    
 var newDiv = $('<div id="mainPost'+postInfo.num+'" class="mainPost '+postInfo.sm+' '+postInfo.imgExist+'"></div>')
         .html("<div id='mainImgDiv"+postInfo.num+"' class='mainImgDiv'> <img src='"+postInfo.mainImg+"' class='mainImg' width="+postInfo.mainImgWidth+" height="+postInfo.mainImgHeight+" /></div>\n\
                 <div id='userInfo"+postInfo.num+"' class='userInfo'>  \n\
@@ -337,6 +342,54 @@ function getTwitterData (JSObjectdata){
         console.log("TwitterID Update Error");
     }
 };
+function getVKData(JSObjectdata){
+    var post = JSObjectdata.response;
+    postInfo.sm = "vk";
+    for(var i=1; i < post.length; i++ ){
+        if( post[i].id == vk_lastID ){
+            break;
+        }
+        if(post[i].user){
+            postInfo.userName = post[i].user.first_name +" "+post[i].user.last_name; 
+            postInfo.userImg = post[i].user.photo_medium_rec;
+        }else if(post[i].group){
+            postInfo.userName = post[i].group.name;
+            postInfo.userImg = post[i].group.photo_big;
+        }else{
+           continue;
+        }
+        postInfo.timeDisplay = getTime(post[i].date);
+        
+        if(post[i].text == ""){continue;}
+        postInfo.msg = post[i].text;
+        
+        try{
+            if(post[i].attachment.photo.src_xxxbig) postInfo.mainImg = post[i].attachment.photo.src_xxxbig;
+            else if(post[i].attachment.photo.src_xxbig) postInfo.mainImg = post[i].attachment.photo.src_xxbig;
+            else if(post[i].attachment.photo.src_xbig) postInfo.mainImg = post[i].attachment.photo.src_xbig;
+            else if(post[i].attachment.photo.src_big) postInfo.mainImg = post[i].attachment.photo.src_big;
+            else postInfo.mainImg = post[i].attachment.photo.src;
+            
+            postInfo.mainImgWidth = post[i].attachment.photo.width;
+            postInfo.mainImgHeight = post[i].attachment.photo.width;
+            postInfo.imgExist = "vertical";
+        }
+        catch(e){
+            postInfo.mainImg = " ";
+            postInfo.mainImgWidth = 0;
+            postInfo.mainImgHeight = 0;
+            postInfo.imgExist = "horizontal";
+        }
+        postInfo.id = post[i].id;
+        postInfo.num += 1;
+        wrappingData();      
+    }
+    try{ vk_lastID =  post[1].id;
+    }catch(e){
+        vk_lastID =  0;
+        console.log("VK Update Error");
+    }
+}
 
 //------------- SocialMediaNetworks Class -------------
 function SocialMediaNetworks(url,name){
@@ -368,6 +421,8 @@ function successFn(data, status, xhr){
             }catch(e){
                 $(".error").css("display","block");
             }
+        }else if(name == "vk"){
+            getVKData(data);
         }
     }
     
@@ -408,16 +463,21 @@ function declareSMN(){
         twitter = new SocialMediaNetworks("_scripts/getTwitterData.php","twitter");
         twitter.ajaxCall(twitter_input); 
     }
+    if(vk_input!=""){
+        vk = new SocialMediaNetworks("https://api.vk.com/method/newsfeed.search?q=%23"+vk_input+"&extended=1&count=5&callback=?","vk");
+        vk.ajaxCall(""); 
+    }
 
 }
 function inputValidation(){
     instagram_input = ($("#userInput #instagram").val());
     googleplus_input =  ($("#userInput #googleplus").val());
     twitter_input =  ($("#userInput #twitter").val());
+    vk_input =  ($("#userInput #vk").val());
 
-    var myRE = /(^[0-9]*[a-zA-Z_\u0621-\u0669]+[a-zA-Z_\u0621-\u06690-9]*$)|^$/;
+    var myRE = /(^[0-9]*[a-zA-Z_\u0621-\u0669\u0400-\u04FF]+[a-zA-Z_\u0621-\u0669\u0400-\u04FF0-9]*$)|^$/;
     
-    if( !myRE.test(instagram_input) || !myRE.test(googleplus_input) || !myRE.test(twitter_input) ){
+    if( !myRE.test(instagram_input) || !myRE.test(googleplus_input) || !myRE.test(twitter_input) || !myRE.test(vk_input) ){
         $(".wrongInput").css("background-color","rgba(250,0,0,.65)");
         return false;
     }else{
