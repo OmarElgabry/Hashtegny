@@ -4,70 +4,102 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" /> 
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 
-    <title>
-        Hashtegny
-    </title>        
-        <link  rel="stylesheet" href="http://css-spinners.com/css/spinner/three-quarters.css" type="text/css">
-        <link  rel="stylesheet" href="_css/animations.min.css" type="text/css" />
-        <link  rel="stylesheet" href="_css/main.css" type="text/css" />
-	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script type="text/javascript" src="_scripts/animations.min.js"></script>
-        <script type="text/javascript" src="_scripts/appear.min.js"></script> 
-        <script type="text/javascript" src="_scripts/main.js"></script>
+    <title>Hashtegny</title>
+
+    <link rel="stylesheet" href="css/animations.min.css" type="text/css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/main.css" type="text/css" />
 </head>
+
 <body>
-<div id="theme" class="theme">
-    Background: 
-        Image 1<input type="radio" name="theme" value="vol1" checked/>
-        Image 2<input type="radio" name="theme" value="vol2"  />
-        Image 3<input type="radio" name="theme" value="vol3" />
-        Image 4<input type="radio" name="theme" value="vol4" />
-        Image 5<input type="radio" name="theme" value="vol5" />
-        <button class="stopButton">Stop It!</button>
-        <button class="updateButton">Update Me!</button>
-        <button class="downloadButton">Download</button>&nbsp;
-        <div class="smIcons">
-             <div>
-                    <iframe src="http://ghbtns.com/github-btn.html?user=OmarElGabry&repo=Hashtegny&type=watch" height="20" width="50" frameborder="0" scrolling="0" style="width:50px; height: 20px;" allowTransparency="true"></iframe>
-             </div>
-             <div>
-                    <iframe src="http://ghbtns.com/github-btn.html?user=OmarElGabry&repo=Hashtegny&type=fork" height="20" width="50" frameborder="0" scrolling="0" style="width:50px; height: 20px;" allowTransparency="true"></iframe>
-             </div>
-            <div>
-                    <iframe src="http://ghbtns.com/github-btn.html?user=OmarElGabry&type=follow" height="20" width="160" frameborder="0" scrolling="0" style="width:160px; height: 20px;" allowTransparency="true"></iframe>
-            </div>&nbsp;
-             <div>
-                    <iframe src="//www.facebook.com/plugins/like.php?href=http://omarelgabry.github.io/Hashtegny/&send=false&layout=button_count&width=80&show_faces=true&font&colorscheme=light&action=like&height=20" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:20px;" allowTransparency="true"></iframe>
-             </div>
-             <div>
-                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://omarelgabry.github.io/Hashtegny/"  >Tweet</a><script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
-             </div>
-             <div>
-                    <div class="g-plusone" data-size="medium"   data-href="http://omarelgabry.github.io/Hashtegny/"></div><script type="text/javascript">(function() {var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://apis.google.com/js/plusone.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);})();</script>
-             </div>
+<div class="container">
+    <div class="header">
+        <h3>#Hashtegny</h3>
+        <hr>
+
+        <p>
+            jQuery Plugin aggregates hashtags from different social media networks
+            <br>Posts are displayed in a unique, attractive, and animated layout.
+            <br>
+            <i class="fa fa-twitter fa-3x" style="color: #0084B4;"></i>
+            <i class="fa fa-instagram fa-3x" style="color: #306088;"></i>
+            <i class="fa fa-vk fa-3x" style="color: #45668e;"></i>
+            <i class="fa fa-google-plus fa-3x" style="color: #DD4B39;"></i>
+        </p>
+        <hr>
+
+        <div class="options">
+            <input type="text" class="hashtag" value="jquery" placeholder="Search for hashtag">
+            <button type="button" class="search"><i class="fa fa-search"></i> Search</button>
         </div>
+
+        <hr>
+        <div class="snIcons">
+            <div>
+                <iframe src="https://ghbtns.com/github-btn.html?user=OmarElGabry&repo=Hashtegny&type=star&size=small" frameborder="0" scrolling="0" width="50px" height="30px"></iframe>
+            </div>
+            <div>
+                <iframe src="https://ghbtns.com/github-btn.html?user=OmarElGabry&repo=Hashtegny&type=fork&size=small" frameborder="0" scrolling="0" width="50px" height="30px"></iframe>
+            </div>
+            <div>
+                <iframe src="https://ghbtns.com/github-btn.html?user=OmarElGabry&type=follow&size=small" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            <br>
+            <div>
+                <iframe src="//www.facebook.com/plugins/like.php?href=http://omarelgabry.github.io/Hashtegny/&send=false&layout=button_count&width=80&show_faces=true&font&colorscheme=light&action=like&height=20" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:20px;" allowTransparency="true"></iframe>
+            </div>
+            <div>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://omarelgabry.github.io/Hashtegny/"  >Tweet</a><script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div>
+                <div class="g-plusone" data-size="medium"   data-href="http://omarelgabry.github.io/Hashtegny/"></div><script type="text/javascript">(function() {var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://apis.google.com/js/plusone.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);})();</script>
+            </div>
+        </div>
+    </div>
+    <a class="toggle-header"><i class="fa fa-angle-up fa-5x"></i></a>
 </div>
 
-<div id="userInput" class="userInput">
-    <div class='wrongInput'>Please make sure to use valid characters, don't use '#' and use at least one alphabet letter</div>
-    <form autocomplete="on" method="post" >
-            <label for="instagram" class="instagramLabel">Instagram:#</label>
-            <input type="text" name="instagram" id="instagram" value="aiesec"  maxlength="15" />
-            <br />
-            <label for="googleplus" class="googleplusLabel">GooglePlus:#</label>
-            <input type="text" name="googleplus" id="googleplus" value="gsamena"   maxlength="15"/>
-            <br />
-            <label for="twitter" class="twitterLabel">Twitter:#</label>
-            <input type="text" name="twitter" id="twitter" value="تويتر"  maxlength="15"/> 
-            <br />
-            <label for="vk" class="vkLabel">VK:#</label>
-            <input type="text" name="vk" id="vk" value="зима" maxlength="15"/> 
-            <br />
-            <input type="submit" name="submit" id="submit" value="#Hashtegny" title="Press Me!" /> 
-    </form>
-</div>
-    
-<div id="Hashtegny" class="Hashtegny"></div>
+<div id="myPlugin"></div>
 
 </body>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="js/animations.min.js"></script>
+    <script type="text/javascript" src="js/appear.min.js"></script>
+    <script type="text/javascript" src="js/hashtegny.js"></script>
+
+    <script>
+        $(document).ready(function(){
+
+        // start the plugin & pass your options
+        $('#myPlugin').hashtegny({
+            twitter:{
+                enable: true,
+                hashtag: "twitter",
+                count: 5
+            },
+            google:{
+                enable: true,
+                hashtag: "google",
+                count: 5
+            },
+            instagram:{
+                enable: true,
+                hashtag: "insta",
+                count: 5
+            },
+            vk:{
+                enable: true,
+                hashtag: "зима",
+                count: 5
+            },
+            textLength: 300,
+            animate: 8,
+            updateTime: 60,
+            background: "background.jpg",
+            showError: false
+        });
+    });
+
+    </script>
 </html>
