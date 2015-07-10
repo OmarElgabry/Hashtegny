@@ -100,7 +100,7 @@ I've written this script in my free time during my studies. This is for free, un
 
 ## Contribute <a name="contribute"></a>
 
-Contribute by creating new issues, sending pull requests on Github or you can send an email at: omar_elgabry_93@gmail.com
+Contribute by creating new issues, sending pull requests on Github or you can send an email at: omar.elgabry.93@gmail.com
 
 ## Dependencies
 + [Animations](https://github.com/joemottershaw/animations)
