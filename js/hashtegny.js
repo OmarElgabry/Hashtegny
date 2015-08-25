@@ -227,6 +227,9 @@
             //initialization for the plugin
             init: function(){
 
+                // trigger search for hashtag 
+                // Events.search();
+
                 // trigger toggle header event
                 Events.toggleHeader();
 
@@ -546,18 +549,22 @@
                     SocialNetwork.posts = 0;
 
                     var hashtag = $.trim($(".hashtag").val());
-
-                    if(hashtag.length > 0){
-
                         hashtag = hashtag.replace(/#/g, "");
-
+                    
+                    if(hashtag.length > 0){
                         SocialNetwork.networks.forEach(function(network){
                             options[network].hashtag = hashtag;
                         });
                     }
 
+                    // hide header
+                    $(".container .toggle-header").addClass("hidden");
+                    $(".header").hide();
+                    $(".container .toggle-header").html("<i class='fa fa-angle-down fa-2x'></i>");
+
                     // start the plugin
                     plugin.init();
+
                 });
             },
 
