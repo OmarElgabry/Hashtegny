@@ -33,6 +33,13 @@ Check [Demo](http://omarelgabry.github.io/Hashtegny/)
 + Build based on latest version of jQuery(CDN)
 + Easy to be maintained and customized.
 
+## Install
+You can install with npm
+
+``` 
+npm install hashtegny 
+```
+
 ## Getting Started
 
 Add CSS Files:
