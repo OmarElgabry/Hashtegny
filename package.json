@@ -1,5 +1,5 @@
 {
-  "name": "Hashtegny",
+  "name": "hashtegny",
   "version": "1.0.0",
   "description": "jQuery Plugin aggregates hashtags from different social media networks. Posts are displayed in a unique, attractive, and animated layout.",
   "main": "js/hashtegny.js",
