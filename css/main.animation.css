@@ -1,0 +1,333 @@
+/*
+ *  Document   : main.css
+ *  Author     : Omar El Gabry <omar.elgabry.93@gmail.com>
+ *  Description: Main CSS File(Animation Layout)
+ *
+ */
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+body {
+    background: #5f2c82; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #5f2c82 , #49a09d); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #5f2c82 , #49a09d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    font-family: "Avant Garde",Avantgarde,"Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}
+
+/* ==== Main Post Container === */
+.mainPost{
+   margin: 0 auto;
+   margin-top: 2%;
+   width: 85%;
+   text-align: center;
+   display: none;
+}
+.mainPost.no-image{
+    width: 65%;
+    margin-top: 6%;
+}
+
+/* ==== Main Image Container === */
+.mainImgDiv {
+    display: inline-block;
+    vertical-align:middle;
+    width: 45%;
+    margin-right: 1%;
+}
+
+/* ==== Main Image === */
+.mainImg{
+    min-width: 90%;
+    max-width: 100%;
+    min-height: 30em;
+    max-height: 35em;
+    border-radius:5px;
+    box-shadow: 0 0 20px 0 rgba(10, 10, 10, 0.4);
+    moz-border-radius: 5px;
+    webkit-border-radius: 5px;
+}
+.no-image .mainImgDiv{
+    display: none;
+}
+
+/* ==== User Info Container === */
+.userInfo{
+    display:inline-block;
+    vertical-align:middle;
+    width: 45%;
+    text-align: left;
+}
+.no-image .userInfo{
+    width: 100%;
+}
+
+/* ==== User Info === */
+.userImg{
+    display: inline-block;
+    vertical-align:middle;
+    padding: 0.7%;
+    width: 20%;
+    min-height: 7em;
+    max-height: 8em;
+    border-radius:3px;
+    moz-border-radius: 3px;
+    webkit-border-radius: 3px;
+}
+.no-image .userImg{
+    padding: 0.3%;
+    border: none;
+    min-height: 10em;
+    max-height: 10em;   
+}
+.userName{
+    display: inline-block;
+    vertical-align:middle;
+    margin-left: 1%;
+    width: 35%;
+    padding: 1%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.no-image .userName{
+    font-size: 1.2em;
+}
+.snImage{
+    display: inline-block;
+    vertical-align:middle;
+    width: 12%;
+    margin-left: 25%;
+}
+.no-image .snImage{
+    width: 15%;
+    margin-left: 22%;
+}
+.postText{
+    cursor:pointer;
+    position: relative;
+    margin-top: 5%;
+    border: 1px solid black;
+    box-shadow: 0 0 20px 0 rgba(10, 10, 10, 0.4);
+}
+.postText:hover{
+    box-shadow: 0 0 20px 0 rgba(15, 15, 15, 0.6);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+.postText  p{
+    line-height: 1.5em;
+    word-wrap: break-word;
+    text-indent: 2.2em;
+    padding: 2%;
+    margin: 0;
+    overflow: hidden;
+}
+.no-image .postText p{
+    font-size: 1.4em;
+}
+.postText span{
+    display: inline-block;
+    position: absolute;
+    top: -0.3em;
+    left: 0;
+    color: #ccc;
+    font-family: Cambria, Georgia, serif;
+    font-size: 8em;
+}
+.no-image .postText span{
+    font-size: 12em;
+}
+.postTime{
+    padding: 1.5%;
+}
+
+/* ==== Social Networks === */
+.instagram .userImg,.instagram .userName,.instagram .postText,.instagram .postTime{
+    background-color: #306088;
+    border-color: #306088;
+    color: white;
+}
+.twitter .userImg,.twitter .userName,.twitter .postText,.twitter .postTime{
+    background-color: #0084B4;
+    border-color: #0084B4;
+    color: white;
+}
+.google .userImg,.google .userName,.google .postText,.google .postTime{
+    background-color: #DD4B39;
+    border-color: #DD4B39;
+    color: white;
+}
+.vk .userImg,.vk .userName,.vk .postText,.vk .postTime{
+    background-color: #45668e;
+    border-color: #45668e;
+    color: white;
+}
+
+/* ==== Search Container === */
+.intro-container{
+    background-color: white;
+    text-align: center;
+}
+.intro-container .toggle-header{
+    color: #3498db;
+}
+.intro-container .toggle-header:hover{
+    cursor: pointer;
+    color: #3cb0fd;
+}
+
+/* ==== Header === */
+.header{
+    font-size: 0.9em;
+    padding: 0.5%;
+    font-family: "Avant Garde",Avantgarde,"Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}
+.header h3{
+    font-size: 70px;
+    font-weight: bold;
+    margin: 2% auto;
+}
+.header hr{
+    opacity: 0.2;
+    background-color: #fff;
+    border-color: #fff;
+    border-bottom: none;
+    width: 50%;
+}
+.header p{
+    font-size: 1.5em;
+    padding: 10px;
+    margin: 0;
+}
+.header button{
+    border: none;
+    font-family: "Avant Garde",Avantgarde,"Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+    background-color: #3498db;
+    color: #ffffff;
+    padding: 10px;
+}
+.header button:hover{
+    cursor: pointer;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+.header button.animation-button, .header button.grid-button{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.header button.animation-button{
+    background-color: #49a09d;
+}
+.header button.grid-button{
+    background-color: #5f2c82;
+}
+.header input{
+    padding: 10px;
+    border: solid 1px #3498db;
+    font-family: "Avant Garde",Avantgarde,"Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+}
+.header .snIcons{
+    padding: 1%;
+}
+.snIcons, .snIcons div{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* ==== Spinner === */
+.spinner{
+    color: #3498db;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -1px;
+    margin-left: 9px;
+}
+
+/* ==== Error === */
+.error strong {
+    line-height:30px;
+}
+.error span {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index:999;
+    display:inline;
+    font-size: 1em;
+    color: #a94442;
+    padding: 1%;
+    margin: 0.5%;
+    width: 20%;
+    border:1px solid transparent;
+    background:#f2dede;
+    border-radius:4px;
+    box-shadow: 5px 5px 8px #CCC;
+}
+
+/* ==== @media Query === */
+@media screen and (max-width: 1024px) {
+    .mainImgDiv {
+        width: 70%;
+    }
+    .with-image .userInfo{
+        width: 70%;
+    }
+    .no-image .userImg{
+        min-height: 7em;
+        max-height: 7em;   
+    }
+    .no-image .userName, .no-image .postText p{
+        font-size: 1em;
+    }
+    .no-image  .postText span{
+        font-size: 8em;
+    }
+    .error{
+        font-size: 0.9em;
+    }
+}
+@media screen and (max-width: 480px) {
+    .mainPost, .mainPost.no-image{
+        width: 100%;
+    }
+    .mainImgDiv {
+        min-width: 100%;
+        margin-right: 0;
+    }
+    .userInfo{
+        min-width: 100%;
+    }
+    .mainImg{
+        max-height: 20em;
+        min-height: 20em;
+    }
+    .userImg,.no-image .userImg{
+        max-height: 4.5em;
+        min-height: 4.5em;
+    }
+    .userName,.postText  p, .postTime, .no-image .userName, .no-image .postText p,.header{
+        font-size: 0.8em;
+    }
+    .postText span, .no-image  .postText span{
+        font-size: 6em;
+    }
+    .postText:hover{
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    .header h3{
+        font-size: 30px;
+    }
+    .error{
+        display: none;
+    }
+
+}
+@-ms-viewport{
+  width: device-width;
+  height: device-height;
+  initial-scale: 1.0;
+}
