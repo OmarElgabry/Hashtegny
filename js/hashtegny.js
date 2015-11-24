@@ -355,8 +355,11 @@
                 if(plugin.curLayout === "grid"){
 
                     // if current layout is grid, then destroy, then fadeIn new appended posts (if any), and apply grid layout
+                    // in case of first time, just add class 'grid' instead of destroying previous grid layout
                     // this code instead of using: http://masonry.desandro.com/methods.html#prepended
-                    $(targetEle).masonry('destroy');
+                    if(!$(targetEle).hasClass('grid')){
+                            $(targetEle).addClass('grid');
+                    }else   $(targetEle).masonry('destroy');
                     $(targetEle).children('.mainPost').fadeIn();
                     $(targetEle).masonry(_options);
 
@@ -372,7 +375,7 @@
                     // So, empty the targetEle, then setTimeout, then add html again, and apply grid
                     var _html = $(targetEle).html();
                     $(targetEle).html("");
-                    setTimeout(function(){$(targetEle).html(_html).masonry(_options)}, 100);
+                    setTimeout(function(){$(targetEle).html(_html).masonry(_options)}, 1000);
                 }
             },
 
@@ -581,8 +584,8 @@
             // whether the plugin is progress(i.e. waiting for all ajax calls to be loaded)
             inProgress: false,
 
-            // track current layout, default is animation
-            curLayout: "animation",
+            // track current layout, default is grid
+            curLayout: "grid",
 
             // initialization for the plugin
             init: function(){

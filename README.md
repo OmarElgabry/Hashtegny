@@ -47,8 +47,8 @@ Add CSS Files:
  <link rel="stylesheet" href="css/animations.min.css" type="text/css" />
  <!-- Font Awesome -->
  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
- <!-- Main CSS File(Animation Layout) - Default -->
- <link id="style" rel="stylesheet" href="css/main.animation.css" type="text/css" />
+ <!-- Main CSS File(Grid Layout) - Default -->
+ <link id="style" rel="stylesheet" href="css/main.grid.css" type="text/css" />
 ```
 
 Add JS Files:
