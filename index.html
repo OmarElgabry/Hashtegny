@@ -6,20 +6,28 @@
 
     <title>Hashtegny</title>
 
+    <!-- Animation -->
     <link rel="stylesheet" href="css/animations.min.css" type="text/css" />
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/main.css" type="text/css" />
+    <!-- Main CSS File(Animation Layout) - Default -->
+    <link id="style" rel="stylesheet" href="css/main.animation.css" type="text/css" />
+    <!-- GitHub Badge -->
+    <style>#forkongithub a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#c11;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:fixed;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;right:-60px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);box-shadow:4px 4px 10px rgba(0,0,0,0.8);}}</style>
 </head>
 
 <body>
-<div class="container">
+<div class="intro-container">
+    <div>
+        <span id="forkongithub"><a href="https://github.com/OmarElGabry/Hashtegny" target="_blank" style="box-sizing: initial;-webkit-box-sizing:initial;">Fork me on GitHub</a></span>
+    </div>
     <div class="header">
         <h3>#Hashtegny</h3>
         <hr>
 
         <p>
-            jQuery Plugin aggregates hashtags from different social media networks
-            <br>Posts are displayed in a unique, attractive, and animated layout.
+            jQuery Plugin aggregates hashtags from different social media networks.
+            <br>Posts are displayed in a unique, & attractive grid, and animated layout.
             <br>
             <i class="fa fa-twitter fa-3x" style="color: #0084B4;"></i>
             <i class="fa fa-instagram fa-3x" style="color: #306088;"></i>
@@ -29,11 +37,15 @@
         <hr>
 
         <div class="options">
-            <input type="text" class="hashtag" value="jquery" placeholder="Search for hashtag">
+            <input type="text" class="hashtag" value="awesome" placeholder="Search for hashtag">
             <button type="button" class="search"><i class="fa fa-search"></i> Search</button>
-        </div>
+            <hr>
 
+            <button type="button" class="animation-button"><i class="fa fa-star"></i> Animation</button>
+            <button type="button" class="grid-button"><i class="fa fa-th"></i> Grid Layout</button>
+        </div>
         <hr>
+
         <div class="snIcons">
             <div>
                 <iframe src="https://ghbtns.com/github-btn.html?user=OmarElGabry&repo=Hashtegny&type=star&size=small" frameborder="0" scrolling="0" width="50px" height="30px"></iframe>
@@ -59,47 +71,54 @@
     <a class="toggle-header"><i class="fa fa-angle-up fa-5x"></i></a>
 </div>
 
-<div id="myPlugin"></div>
+<div id="hashtegny-container"></div>
 
 </body>
 
+    <!-- jQuery -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!-- Animation -->
     <script type="text/javascript" src="js/animations.min.js"></script>
     <script type="text/javascript" src="js/appear.min.js"></script>
+    <!-- Grid Layout -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js"></script>
+    <!-- Twitter JS library -->
+    <script type="text/javascript" src="js/codebird.js"></script>
+    <!-- Hashtegny -->
     <script type="text/javascript" src="js/hashtegny.js"></script>
 
     <script>
         $(document).ready(function(){
 
-        // start the plugin & pass your options
-        $('#myPlugin').hashtegny({
-            twitter:{
-                enable: true,
-                hashtag: "twitter",
-                count: 5
-            },
-            google:{
-                enable: true,
-                hashtag: "google",
-                count: 5
-            },
-            instagram:{
-                enable: true,
-                hashtag: "insta",
-                count: 5
-            },
-            vk:{
-                enable: true,
-                hashtag: "зима",
-                count: 5
-            },
-            textLength: 300,
-            animate: 8,
-            updateTime: 60,
-            background: "background.jpg",
-            showError: false
+            // start the plugin & pass your options
+            $('#hashtegny-container').hashtegny({
+                twitter:{
+                    enable: true,
+                    hashtag: "twitter",
+                    count: 5        // number of posts to be displayed
+                },
+                google:{
+                    enable: true,
+                    hashtag: "google",
+                    count: 5
+                },
+                instagram:{
+                    enable: true,
+                    hashtag: "insta",
+                    count: 5
+                },
+                vk:{
+                    enable: true,
+                    hashtag: "зима",
+                    count: 5
+                },
+                textLength: 300,    // max length of post content
+                animate: 8,         // time of animation for each post in seconds
+                refresh: 60,        // add recent posts if any evey 60 seconds
+                updateTime: 60,     // update post time every 60 second(1 min)
+                background: false,  // add background image
+                showError: false    // show error alert box if any error encountered
+            });
         });
-    });
-
     </script>
 </html>

@@ -1,114 +1,101 @@
 /*
  *  Document   : main.css
  *  Author     : Omar El Gabry <omar.elgabry.93@gmail.com>
- *  Description: Main CSS File
+ *  Description: Main CSS File(Grid Layout)
  *
  */
 
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+html, body {
+    margin: 0;
+    height: 100%;
+}
 body {
-
-    background: #ecf0f1 url(../img/background.jpg) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background: #5f2c82; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #5f2c82 , #49a09d); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #5f2c82 , #49a09d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     font-family: "Avant Garde",Avantgarde,"Century Gothic",CenturyGothic,AppleGothic,sans-serif;
 }
 
-/* ==== Main Post Container === */
-.mainPost{
-   margin: 0 auto;
-   margin-top: 2%;
-   width: 85%;
-   text-align: center;
-   display: none;
+/* ==== Plugin Container === */
+.grid{
+    margin: 0 auto;
+    margin-top: 2%;
 }
-.mainPost.horizontal{
-    width: 65%;
-    margin-top: 6%;
+/* clearfix */
+.grid:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+/* ==== Main Post Container === */
+.mainPost {
+    width: 210px;
+    float: left;
+    text-align: center;
+    padding: 0.7%;
+    margin-bottom: 10px;
+    box-shadow: 0 0 10px 0 rgba(10, 10, 10, 0.2);
+    background-color: white;
 }
 
 /* ==== Main Image Container === */
 .mainImgDiv {
-    display: inline-block;
-    vertical-align:middle;
-    width: 45%;
-    margin-right: 1%;
+    width: 100%;
 }
 
 /* ==== Main Image === */
 .mainImg{
-    min-width: 90%;
-    max-width: 100%;
-    min-height: 30em;
-    max-height: 35em;
-    border-radius:5px;
-    box-shadow: 0 0 20px 0 rgba(10, 10, 10, 0.4);
-    moz-border-radius: 5px;
-    webkit-border-radius: 5px;
+    width: 100%;
+    min-height: 15em;
+    max-height: 17.5em;
 }
-.horizontal .mainImgDiv{
+.no-image .mainImgDiv{
     display: none;
 }
 
 /* ==== User Info Container === */
 .userInfo{
-    display:inline-block;
-    vertical-align:middle;
-    width: 45%;
-    text-align: left;
-}
-.horizontal .userInfo{
     width: 100%;
+    text-align: left;
+    font-size: 0.9em;
 }
 
 /* ==== User Info === */
 .userImg{
     display: inline-block;
     vertical-align:middle;
-    padding: 0.7%;
-    width: 20%;
-    min-height: 7em;
-    max-height: 8em;
+    width: 25%;
+    min-height: 5em;
+    max-height: 6em;
     border-radius:3px;
     moz-border-radius: 3px;
     webkit-border-radius: 3px;
 }
-.horizontal .userImg{
-    padding: 0.3%;
-    border: none;
-    min-height: 10em;
-    max-height: 10em;   
-}
 .userName{
     display: inline-block;
     vertical-align:middle;
-    margin-left: 1%;
-    width: 35%;
+    margin-left: 2%;
+    width: 40%;
     padding: 1%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.horizontal .userName{
-    font-size: 1.2em;
-}
 .snImage{
     display: inline-block;
     vertical-align:middle;
-    width: 12%;
-    margin-left: 25%;
-}
-.horizontal .snImage{
-    width: 15%;
-    margin-left: 22%;
+    width: 20%;
+    margin-left: 10%;
 }
 .postText{
     cursor:pointer;
     position: relative;
-    margin-top: 5%;
-    border: 1px solid black;
-    box-shadow: 0 0 20px 0 rgba(10, 10, 10, 0.4);
+    margin-top: 7%;
 }
 .postText:hover{
     box-shadow: 0 0 20px 0 rgba(15, 15, 15, 0.6);
@@ -119,12 +106,9 @@ body {
     line-height: 1.5em;
     word-wrap: break-word;
     text-indent: 2.2em;
-    padding: 2%;
+    padding: 3%;
     margin: 0;
     overflow: hidden;
-}
-.horizontal .postText p{
-    font-size: 1.4em;
 }
 .postText span{
     display: inline-block;
@@ -133,12 +117,10 @@ body {
     left: 0;
     color: #ccc;
     font-family: Cambria, Georgia, serif;
-    font-size: 8em;
-}
-.horizontal .postText span{
-    font-size: 12em;
+    font-size: 6em;
 }
 .postTime{
+    margin-bottom: 0;
     padding: 1.5%;
 }
 
@@ -164,16 +146,15 @@ body {
     color: white;
 }
 
-/* ==== Container === */
-.container{
-    background-color: transparent;
-    background-color: rgba(250,250,250,.90);
+/* ==== Search Container === */
+.intro-container{
+    background-color: white;
     text-align: center;
 }
-.container .toggle-header{
+.intro-container .toggle-header{
     color: #3498db;
 }
-.container .toggle-header:hover{
+.intro-container .toggle-header:hover{
     cursor: pointer;
     color: #3cb0fd;
 }
@@ -210,7 +191,18 @@ body {
 }
 .header button:hover{
     cursor: pointer;
-    background: #3cb0fd;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+.header button.animation-button, .header button.grid-button{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.header button.animation-button{
+    background-color: #49a09d;
+}
+.header button.grid-button{
+    background-color: #5f2c82;
 }
 .header input{
     padding: 10px;
@@ -229,7 +221,10 @@ body {
 .spinner{
     color: #3498db;
     text-align: center;
-    margin: 20% auto;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -1px;
+    margin-left: 9px;
 }
 
 /* ==== Error === */
@@ -255,54 +250,20 @@ body {
 
 /* ==== @media Query === */
 @media screen and (max-width: 1024px) {
-    .mainImgDiv {
-        width: 70%;
-    }
-    .vertical .userInfo{
-        width: 70%;
-    }
-    .horizontal .userImg{
-        min-height: 7em;
-        max-height: 7em;   
-    }
-    .horizontal .userName, .horizontal .postText p{
-        font-size: 1em;
-    }
-    .horizontal  .postText span{
-        font-size: 8em;
-    }
-    .error{
-        font-size: 0.9em;
+    .mainPost{
+        width: 300px;
     }
 }
 @media screen and (max-width: 480px) {
-    .mainPost, .mainPost.horizontal{
-        width: 100%;
-    }
-    .mainImgDiv {
-        min-width: 100%;
-        margin-right: 0;
-    }
-    .userInfo{
-        min-width: 100%;
-    }
-    .mainImg{
-        max-height: 20em;
-        min-height: 20em;
-    }
-    .userImg,.horizontal .userImg{
-        max-height: 4.5em;
-        min-height: 4.5em;
-    }
-    .userName,.postText  p, .postTime, .horizontal .userName, .horizontal .postText p,.header, .stopButton, .updateButton, .downloadButton{
-        font-size: 0.8em;
-    }
-    .postText span, .horizontal  .postText span{
-        font-size: 6em;
+    .mainPost{
+        width: 280px;
     }
     .postText:hover{
         -webkit-transform: scale(1);
         transform: scale(1);
+    }
+    .header{
+        font-size: 0.8em;
     }
     .header h3{
         font-size: 30px;
@@ -310,10 +271,9 @@ body {
     .error{
         display: none;
     }
-
 }
 @-ms-viewport{
-  width: device-width;
-  height: device-height;
-  initial-scale: 1.0;
+    width: device-width;
+    height: device-height;
+    initial-scale: 1.0;
 }
