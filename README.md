@@ -75,6 +75,9 @@ Finally, Run the plugin:
  <script>
         $(document).ready(function(){
 
+			// this line of code because GitHub Pages(or something else weird) changes the link tags to style tags.
+			$("#style").replaceWith('<link id="style" rel="stylesheet" href="css/main.grid.css" type="text/css" />');
+			
             // start the plugin & pass your options
             $('#hashtegny-container').hashtegny({
                 twitter:{
