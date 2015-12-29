@@ -677,7 +677,7 @@
 
                     var api = "https://www.googleapis.com/plus/v1/activities?query=%23";
                     var hashtag = Utility.urlencode(options.google.hashtag);
-                    var key = "AIzaSyAJHQ62h5MXIpppVfbtDm_7RN9_AsHis5c";
+                    var key = "AIzaSyCTqUXhHBuJZuIf-M-GsOVutsc8cNhABu0";
                     var count = options.google.count;
 
                     if(Utility.empty(this._instance)){
