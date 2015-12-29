@@ -1,6 +1,6 @@
 {
   "name": "hashtegny",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "jQuery Plugin aggregates hashtags from different social media networks. Posts are displayed in a unique, & attractive grid, and animated layout.",
   "main": "js/hashtegny.js",
   "repository": {
