@@ -33,7 +33,7 @@ body {
 }
 
 /* ==== Main Post Container === */
-.mainPost {
+.main-post {
     width: 210px;
     float: left;
     text-align: center;
@@ -44,29 +44,29 @@ body {
 }
 
 /* ==== Main Image Container === */
-.mainImgDiv {
+.attachement-div {
     width: 100%;
 }
 
 /* ==== Main Image === */
-.mainImg{
+.main-attachement{
     width: 100%;
     min-height: 15em;
     max-height: 17.5em;
 }
-.no-image .mainImgDiv{
+.no-image .attachement-div{
     display: none;
 }
 
 /* ==== User Info Container === */
-.userInfo{
+.user-data{
     width: 100%;
     text-align: left;
     font-size: 0.9em;
 }
 
 /* ==== User Info === */
-.userImg{
+.user-image{
     display: inline-block;
     vertical-align:middle;
     width: 25%;
@@ -76,7 +76,7 @@ body {
     moz-border-radius: 3px;
     webkit-border-radius: 3px;
 }
-.userName{
+.user-name{
     display: inline-block;
     vertical-align:middle;
     margin-left: 2%;
@@ -86,23 +86,23 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.snImage{
+.network-image{
     display: inline-block;
     vertical-align:middle;
     width: 20%;
     margin-left: 10%;
 }
-.postText{
+.post-text{
     cursor:pointer;
     position: relative;
     margin-top: 7%;
 }
-.postText:hover{
+.post-text:hover{
     box-shadow: 0 0 20px 0 rgba(15, 15, 15, 0.6);
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
-.postText  p{
+.post-text  p{
     line-height: 1.5em;
     word-wrap: break-word;
     text-indent: 2.2em;
@@ -110,7 +110,7 @@ body {
     margin: 0;
     overflow: hidden;
 }
-.postText span{
+.post-text span{
     display: inline-block;
     position: absolute;
     top: -0.3em;
@@ -119,28 +119,28 @@ body {
     font-family: Cambria, Georgia, serif;
     font-size: 6em;
 }
-.postTime{
+.post-time{
     margin-bottom: 0;
     padding: 1.5%;
 }
 
 /* ==== Social Networks === */
-.instagram .userImg,.instagram .userName,.instagram .postText,.instagram .postTime{
+.instagram .user-image,.instagram .user-name,.instagram .post-text,.instagram .post-time{
     background-color: #306088;
     border-color: #306088;
     color: white;
 }
-.twitter .userImg,.twitter .userName,.twitter .postText,.twitter .postTime{
+.twitter .user-image,.twitter .user-name,.twitter .post-text,.twitter .post-time{
     background-color: #0084B4;
     border-color: #0084B4;
     color: white;
 }
-.google .userImg,.google .userName,.google .postText,.google .postTime{
+.google .user-image,.google .user-name,.google .post-text,.google .post-time{
     background-color: #DD4B39;
     border-color: #DD4B39;
     color: white;
 }
-.vk .userImg,.vk .userName,.vk .postText,.vk .postTime{
+.vk .user-image,.vk .user-name,.vk .post-text,.vk .post-time{
     background-color: #45668e;
     border-color: #45668e;
     color: white;
@@ -209,10 +209,10 @@ body {
     border: solid 1px #3498db;
     font-family: "Avant Garde",Avantgarde,"Century Gothic",CenturyGothic,AppleGothic,sans-serif;
 }
-.header .snIcons{
+.header .network-icons{
     padding: 1%;
 }
-.snIcons, .snIcons div{
+.network-icons, .network-icons div{
     display: inline-block;
     vertical-align: middle;
 }
@@ -250,15 +250,15 @@ body {
 
 /* ==== @media Query === */
 @media screen and (max-width: 1024px) {
-    .mainPost{
+    .main-post{
         width: 300px;
     }
 }
 @media screen and (max-width: 480px) {
-    .mainPost{
+    .main-post{
         width: 280px;
     }
-    .postText:hover{
+    .post-text:hover{
         -webkit-transform: scale(1);
         transform: scale(1);
     }

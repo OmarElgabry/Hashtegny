@@ -17,20 +17,20 @@ body {
 }
 
 /* ==== Main Post Container === */
-.mainPost{
+.main-post{
    margin: 0 auto;
    margin-top: 2%;
    width: 85%;
    text-align: center;
    display: none;
 }
-.mainPost.no-image{
+.main-post.no-image{
     width: 65%;
     margin-top: 6%;
 }
 
 /* ==== Main Image Container === */
-.mainImgDiv {
+.attachement-div {
     display: inline-block;
     vertical-align:middle;
     width: 45%;
@@ -38,7 +38,7 @@ body {
 }
 
 /* ==== Main Image === */
-.mainImg{
+.main-attachement{
     min-width: 90%;
     max-width: 100%;
     min-height: 30em;
@@ -48,23 +48,23 @@ body {
     moz-border-radius: 5px;
     webkit-border-radius: 5px;
 }
-.no-image .mainImgDiv{
+.no-image .attachement-div{
     display: none;
 }
 
 /* ==== User Info Container === */
-.userInfo{
+.user-data{
     display:inline-block;
     vertical-align:middle;
     width: 45%;
     text-align: left;
 }
-.no-image .userInfo{
+.no-image .user-data{
     width: 100%;
 }
 
 /* ==== User Info === */
-.userImg{
+.user-image{
     display: inline-block;
     vertical-align:middle;
     padding: 0.7%;
@@ -75,13 +75,13 @@ body {
     moz-border-radius: 3px;
     webkit-border-radius: 3px;
 }
-.no-image .userImg{
+.no-image .user-image{
     padding: 0.3%;
     border: none;
     min-height: 10em;
     max-height: 10em;   
 }
-.userName{
+.user-name{
     display: inline-block;
     vertical-align:middle;
     margin-left: 1%;
@@ -91,32 +91,32 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.no-image .userName{
+.no-image .user-name{
     font-size: 1.2em;
 }
-.snImage{
+.network-image{
     display: inline-block;
     vertical-align:middle;
     width: 12%;
     margin-left: 25%;
 }
-.no-image .snImage{
+.no-image .network-image{
     width: 15%;
     margin-left: 22%;
 }
-.postText{
+.post-text{
     cursor:pointer;
     position: relative;
     margin-top: 5%;
     border: 1px solid black;
     box-shadow: 0 0 20px 0 rgba(10, 10, 10, 0.4);
 }
-.postText:hover{
+.post-text:hover{
     box-shadow: 0 0 20px 0 rgba(15, 15, 15, 0.6);
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
-.postText  p{
+.post-text  p{
     line-height: 1.5em;
     word-wrap: break-word;
     text-indent: 2.2em;
@@ -124,10 +124,10 @@ body {
     margin: 0;
     overflow: hidden;
 }
-.no-image .postText p{
+.no-image .post-text p{
     font-size: 1.4em;
 }
-.postText span{
+.post-text span{
     display: inline-block;
     position: absolute;
     top: -0.3em;
@@ -136,30 +136,30 @@ body {
     font-family: Cambria, Georgia, serif;
     font-size: 8em;
 }
-.no-image .postText span{
+.no-image .post-text span{
     font-size: 12em;
 }
-.postTime{
+.post-time{
     padding: 1.5%;
 }
 
 /* ==== Social Networks === */
-.instagram .userImg,.instagram .userName,.instagram .postText,.instagram .postTime{
+.instagram .user-image,.instagram .user-name,.instagram .post-text,.instagram .post-time{
     background-color: #306088;
     border-color: #306088;
     color: white;
 }
-.twitter .userImg,.twitter .userName,.twitter .postText,.twitter .postTime{
+.twitter .user-image,.twitter .user-name,.twitter .post-text,.twitter .post-time{
     background-color: #0084B4;
     border-color: #0084B4;
     color: white;
 }
-.google .userImg,.google .userName,.google .postText,.google .postTime{
+.google .user-image,.google .user-name,.google .post-text,.google .post-time{
     background-color: #DD4B39;
     border-color: #DD4B39;
     color: white;
 }
-.vk .userImg,.vk .userName,.vk .postText,.vk .postTime{
+.vk .user-image,.vk .user-name,.vk .post-text,.vk .post-time{
     background-color: #45668e;
     border-color: #45668e;
     color: white;
@@ -228,10 +228,10 @@ body {
     border: solid 1px #3498db;
     font-family: "Avant Garde",Avantgarde,"Century Gothic",CenturyGothic,AppleGothic,sans-serif;
 }
-.header .snIcons{
+.header .network-icons{
     padding: 1%;
 }
-.snIcons, .snIcons div{
+.network-icons, .network-icons div{
     display: inline-block;
     vertical-align: middle;
 }
@@ -269,20 +269,20 @@ body {
 
 /* ==== @media Query === */
 @media screen and (max-width: 1024px) {
-    .mainImgDiv {
+    .attachement-div {
         width: 70%;
     }
-    .with-image .userInfo{
+    .with-image .user-data{
         width: 70%;
     }
-    .no-image .userImg{
+    .no-image .user-image{
         min-height: 7em;
         max-height: 7em;   
     }
-    .no-image .userName, .no-image .postText p{
+    .no-image .user-name, .no-image .post-text p{
         font-size: 1em;
     }
-    .no-image  .postText span{
+    .no-image  .post-text span{
         font-size: 8em;
     }
     .error{
@@ -290,31 +290,31 @@ body {
     }
 }
 @media screen and (max-width: 480px) {
-    .mainPost, .mainPost.no-image{
+    .main-post, .main-post.no-image{
         width: 100%;
     }
-    .mainImgDiv {
+    .attachement-div {
         min-width: 100%;
         margin-right: 0;
     }
-    .userInfo{
+    .user-data{
         min-width: 100%;
     }
-    .mainImg{
+    .main-attachement{
         max-height: 20em;
         min-height: 20em;
     }
-    .userImg,.no-image .userImg{
+    .user-image,.no-image .user-image{
         max-height: 4.5em;
         min-height: 4.5em;
     }
-    .userName,.postText  p, .postTime, .no-image .userName, .no-image .postText p,.header{
+    .user-name,.post-text  p, .post-time, .no-image .user-name, .no-image .post-text p,.header{
         font-size: 0.8em;
     }
-    .postText span, .no-image  .postText span{
+    .post-text span, .no-image  .post-text span{
         font-size: 6em;
     }
-    .postText:hover{
+    .post-text:hover{
         -webkit-transform: scale(1);
         transform: scale(1);
     }

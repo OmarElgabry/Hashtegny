@@ -37,6 +37,9 @@
             animate: 8,
             refresh: 300,
             updateTime: 60,
+            template: "default.html",
+            template_html: null,
+            callback: null,
             background: false,
             showError: false
         };
@@ -82,42 +85,28 @@
 
         // render post(append it to targetEle & increment number of posts)
         SocialNetwork.render =  function(post){
+            
+            post.text  = Utility.truncate(post.text);
+            post.text  = Utility.stripHTML(post.text);
+            post.date  = Utility.unixTime(post.time);
+            post.time  = Utility.timeElapsed(post.time);
 
-            post.msg = Utility.truncate(post.msg);
-
-            var postDiv = $("<div>").attr({class:"mainPost " + post.network + " " + post.imgView, date: Utility.unixTime(post.time)}).css("display", "none");
-
-            var mainImg = $("<img>").attr({src: post.mainImg, class: "mainImg", width: post.mainImgWidth, height: post.mainImgHeight});
-            var imgDiv  = $("<div>").attr({class: "mainImgDiv"}).append(mainImg);
-
-            var userImg     = $("<img>").attr({src: post.userImg, class: "userImg"});
-            var header      = $("<h4>").attr({class: "userName"}).text(post.userName);
-            var networkImg  = $("<img>").attr({src: "img/" + post.network + ".png", class: "snImage"});
-            var message     = $("<div>").attr({class: "postText", onclick: "window.open('" + post.url + "');"})
-                                .append($("<span>").text("\""))
-                                .append($("<p>").text(Utility.stripHTML(post.msg)));
-
-            var postTime = $("<p>").attr({class: "postTime"}).append($("<i>").attr({class: "fa fa-clock-o"})).append($("<span>").text(" " + Utility.timeElapsed(post.time)));
-            var userDiv  = $("<div>").attr({class: "userInfo"})
-                            .append(userImg)
-                            .append(header)
-                            .append(networkImg)
-                            .append(message)
-                            .append(postTime);
+            // use the template to get the post html
+            var post_html = plugin.tempFn(post);
 
             // insert new post in the right place so that posts will be sorted,
-            // based on post time(time where the post was created)
+            // based on post time(time when the post was created)
             var inserted = false;
             targetEle.children("div").each(function(){
-                if(parseInt($(this).attr("date")) < parseInt(postDiv.attr("date"))){
-                    $(this).before(postDiv.append(imgDiv).append(userDiv));
+                if(parseInt($(this).attr("date")) < parseInt(post.date)){
+                    $(this).before(post_html);
                     inserted = true;
                     return false;
                 }
             });
 
             if(!inserted){
-                targetEle.append(postDiv.append(imgDiv).append(userDiv));
+                targetEle.append(post_html);
             }
 
             SocialNetwork.posts++;
@@ -260,16 +249,138 @@
             }
         };
 
+		var Layouts = {
+            
+            curLayout: null,
+
+			init: function(){
+
+                var _default   = this.grid;
+                this.curLayout = Utility.empty(this.curLayout)? _default: this.curLayout;
+				this.curLayout.start();
+			},
+
+			animation: {
+				name: "animation",
+				css: "css/main.animation.css",
+				start: function(){
+					var index = 0;
+					var len   = SocialNetwork.posts;
+
+					// buffer is needed to allow animateOut() to run without any interruption
+					var buffer = 2000;
+
+					var animate_In  = ["fade-in","flip-in-x","zoom-in","fade-in-up","fade-in-left","flip-in-y","fade-in-up-right","bounce-in-down","flip-in-bottom-back","zoom-in-right-big"];
+					var animate_Out = ["fade-out","flip-out-x","zoom-out","fade-out-down","fade-out-right","flip-out-y","fade-out-down-left","bounce-out-up","flip-out-bottom-back","zoom-out-left-big"];
+
+					// hide all posts, and end any previous animation
+					$(targetEle).children(".main-post").css("display", "none").each(function(){
+						animateEnd(this);
+						$(this).removeClass("animating animate-in animate-out");
+					});
+
+					doAnimation();
+					intervals.doAnimation = setInterval(doAnimation, (options.animate  * 1000) + buffer);
+
+					function doAnimation(){
+
+						if(index - 1 >= 0){
+							var prevPost = targetEle.children("div:eq("+(index - 1)+")");
+							animateOut(prevPost, animate_Out[(index - 1)%10]);
+						}
+
+						intervals.animateIn = setTimeout(function(){
+
+							if(index - 1 >= 0){
+								var prevPost = targetEle.children("div:eq("+(index - 1)+")");
+
+								// end animation after animateOut()
+								animateEnd(prevPost);
+
+								// animate-out sometimes needs to be explicitly removed
+								prevPost.removeClass("animate-out");
+								prevPost.hide();
+							}
+
+							// reset index
+							if(index >= len){
+								index = 0;
+							}
+
+							var curPost = targetEle.children("div:eq("+(index)+")");
+							curPost.show();
+							animate(curPost, animate_In[index%10]);
+							index++;
+
+						}, buffer);
+					}
+				},
+				stop: function(){
+
+					// disable animation intervals
+                    for (var key in intervals) {
+                        if (intervals.hasOwnProperty(key) && (key === 'doAnimation' || key === 'animateIn')){
+                            clearInterval(intervals[key]);
+                        }
+                    }
+					
+					// $(targetEle).addClass("grid");
+					
+					// make sure all posts have no animation and are displayed
+                    $(targetEle).children(".main-post").each(function(){
+                        animateEnd(this);
+                        $(this).removeClass("animating animate-in animate-out");
+                    }).css("display", "none");
+				}
+			},
+
+			grid: {
+				name: "grid",
+				css: "css/main.grid.css",
+				start: function(from_toggle){
+				
+					var _options = {itemSelector: '.main-post', gutter: 10, isFitWidth: true};
+                    from_toggle  = (typeof from_toggle !== 'undefined') ? from_toggle : false;
+
+					if(from_toggle == false){
+
+						// if current layout is grid, then destroy, then fadeIn new appended posts (if any), and apply grid layout
+						// in case of first time, just add class 'grid' instead of destroying previous grid layout
+						// this code instead of using: http://masonry.desandro.com/methods.html#prepended
+						if(!$(targetEle).hasClass('grid')){
+								$(targetEle).addClass('grid');
+						}else   $(targetEle).masonry('destroy');
+						$(targetEle).children('.main-post').fadeIn();
+						$(targetEle).masonry(_options);
+
+					}else{
+
+                        $(targetEle).addClass("grid");
+                        $(targetEle).children(".main-post").css("display", "block");
+
+						// this code has no useful meaning, just buffering(timeout) is needed for grid to layout properly,
+						// So, empty the targetEle, then setTimeout, then add html again, and apply grid
+						var _html = $(targetEle).html();
+						$(targetEle).html("");
+						setTimeout(function(){$(targetEle).html(_html).masonry(_options)}, 1000);
+					}
+				},
+				stop: function(){
+
+					// disable grid layout and make sure all posts are hidden
+					$(targetEle).masonry('destroy').removeClass("grid");
+                    $(targetEle).children('.main-post').css('display', 'none');
+				}
+			}
+		};		
+		
         var Events = {
 
             // events that should run when plugin.init() is called
-            onInit: function(){
+            init: function(){
 
                 // trigger toggle header event
                 this.toggleHeaderOnClick();
-
-                //
-                this.toggleLayout();
 
                 // add spinner to page
                 this.toggleSpinner();
@@ -282,101 +393,12 @@
                 this.toggleSpinner();
                 this.hideHeader();
 
-                // trigger events
-                if(plugin.curLayout === "animation") {
-                        this.animate();
-                } else  this.grid();
+                // choose between different layouts
+                this.toggleLayout();
 
                 this.updateTime();
                 this.search();
                 this.refresh();
-            },
-
-            // apply animation layout
-            animate: function() {
-
-                var index = 0;
-                var len   = SocialNetwork.posts;
-
-                // buffer is needed to allow animateOut() to run without any interruption
-                var buffer = 2000;
-
-                var animate_In  = ["fade-in","flip-in-x","zoom-in","fade-in-up","fade-in-left","flip-in-y","fade-in-up-right","bounce-in-down","flip-in-bottom-back","zoom-in-right-big"];
-                var animate_Out = ["fade-out","flip-out-x","zoom-out","fade-out-down","fade-out-right","flip-out-y","fade-out-down-left","bounce-out-up","flip-out-bottom-back","zoom-out-left-big"];
-
-                // hide all posts, and end any previous animation
-                $(targetEle).children(".mainPost").css("display", "none").each(function(){
-                    animateEnd(this);
-                    $(this).removeClass("animating animate-in animate-out");
-                });
-
-                doAnimation();
-                intervals.doAnimation = setInterval(doAnimation, (options.animate  * 1000) + buffer);
-
-                function doAnimation(){
-
-                    if(index - 1 >= 0){
-                        var prevPost = targetEle.children("div:eq("+(index - 1)+")");
-                        animateOut(prevPost, animate_Out[(index - 1)%10]);
-                    }
-
-                    intervals.animateIn = setTimeout(function(){
-
-                        if(index - 1 >= 0){
-                            var prevPost = targetEle.children("div:eq("+(index - 1)+")");
-
-                            // end animation after animateOut()
-                            animateEnd(prevPost);
-
-                            // animate-out sometimes needs to be explicitly removed
-                            prevPost.removeClass("animate-out");
-                            prevPost.hide();
-                        }
-
-                        // reset index
-                        if(index >= len){
-                            index = 0;
-                        }
-
-                        var curPost = targetEle.children("div:eq("+(index)+")");
-                        curPost.show();
-                        animate(curPost, animate_In[index%10]);
-                        index++;
-
-                    }, buffer);
-                }
-            },
-
-            // apply grid layout
-            grid: function(){
-
-                var _options = {itemSelector: '.mainPost', gutter: 10, isFitWidth: true};
-
-                if(plugin.curLayout === "grid"){
-
-                    // if current layout is grid, then destroy, then fadeIn new appended posts (if any), and apply grid layout
-                    // in case of first time, just add class 'grid' instead of destroying previous grid layout
-                    // this code instead of using: http://masonry.desandro.com/methods.html#prepended
-                    if(!$(targetEle).hasClass('grid')){
-                            $(targetEle).addClass('grid');
-                    }else   $(targetEle).masonry('destroy');
-                    $(targetEle).children('.mainPost').fadeIn();
-                    $(targetEle).masonry(_options);
-
-                }else{
-
-                    // make sure all posts have no animation and are displayed
-                    $(targetEle).children(".mainPost").each(function(){
-                        animateEnd(this);
-                        $(this).removeClass("animating animate-in animate-out");
-                    }).css("display", "block");
-
-                    // this code has no useful meaning, just buffering(timeout) is needed for grid to layout properly,
-                    // So, empty the targetEle, then setTimeout, then add html again, and apply grid
-                    var _html = $(targetEle).html();
-                    $(targetEle).html("");
-                    setTimeout(function(){$(targetEle).html(_html).masonry(_options)}, 1000);
-                }
             },
 
             // update post time
@@ -387,7 +409,7 @@
                 function doUpdateTime(){
                     targetEle.children("div").each(function(){
                         var str = Utility.timeElapsed($(this).attr("date"));
-                        $(this).find(".userInfo .postTime span").text(" " + str);
+                        $(this).find(".user-data .post-time span").text(" " + str);
                     });
                 }
             },
@@ -485,7 +507,6 @@
 
                 if(!header.hasClass("hidden")){
 
-                    // this code is repeated in toggleHeaderOnClick()
                     header.addClass("hidden").fadeOut({"duration": 100, "complete": function() {
                         link.html("<i class='fa fa-angle-down fa-3x'></i>");
                     }});
@@ -494,20 +515,17 @@
 
             // toggle header hide/show on click
             toggleHeaderOnClick: function(){
+
                 $(".intro-container .toggle-header").off('click').on('click',function(e) {
                     e.preventDefault();
 
                     var header = $(".intro-container .header");
                     var link   = $(this);
 
-                    header.toggleClass("hidden");
-
-                    if(header.hasClass("hidden")){
-                        header.fadeOut({"duration": 100, "complete": function() {
-                            link.html("<i class='fa fa-angle-down fa-3x'></i>");
-                        }});
+                    if(!header.hasClass("hidden")){
+                        Events.hideHeader();
                     }else{
-                        header.hide().fadeIn();
+                        header.hide().fadeIn().removeClass("hidden");
                         link.html("<i class='fa fa-angle-up fa-5x'></i>");
                     }
                 });
@@ -515,7 +533,9 @@
 
             // toggle spinner hide/show
             toggleSpinner: function (){
+
                 var options = $(".intro-container .header .options");
+
                 if(options.children(".spinner").length === 0){
                     var spinner = $("<div>").attr({class: "spinner"}).append($("<i>").attr({class: "fa fa-refresh fa-spin fa-2x"}));
                     options.children("button.search").after(spinner);
@@ -527,91 +547,98 @@
             // toggle layout between animation and grid
             toggleLayout: function(){
 
-                // click event for animating layout
-                $('.intro-container .header button.animation-button').off('click').on('click',function(e) {
+                $('.intro-container button.animation-button, .intro-container button.grid-button').off('click').on('click',function(e) {
                     e.preventDefault();
 
-                    if(plugin.curLayout == "animation"){
+                    var selectedLayout  = $(this).attr('class').split(" ")[0];
+                    selectedLayout      = selectedLayout.split("-")[0];
+                    selectedLayout      = Utility.empty(selectedLayout)? Layouts.curLayout: selectedLayout; 
+
+                    if(Layouts.curLayout.name == selectedLayout){
                         return false;
                     }
-
-                    // disable grid layout and make sure all posts are hidden
-                    $(targetEle).masonry('destroy').removeClass("grid");
-                    $(targetEle).children('.mainPost').css('display', 'none');
-
-                    // get style sheet
-                    $("#style").attr("href", "css/main.animation.css");
-
-                    // enable animations
-                    Events.animate();
-
+					
+					Layouts.curLayout.stop();
+					
                     // assign
-                    plugin.curLayout = "animation";
+                    Layouts.curLayout = Layouts[selectedLayout];
 
-                });
-
-                // click event for grid layout
-                $('.intro-container .header button.grid-button').off('click').on('click',function(e) {
-                    e.preventDefault();
-
-                    if(plugin.curLayout == "grid"){
-                        return false;
-                    }
-
-                    // disable animation intervals
-                    for (var key in intervals) {
-                        if (intervals.hasOwnProperty(key) && (key === 'doAnimation' || key === 'animateIn')){
-                            clearInterval(intervals[key]);
-                        }
-                    }
-
-                    // add class grid and get style sheet
-                    $(targetEle).addClass("grid");
-                    $("#style").attr("href", "css/main.grid.css");
-
-                    // enable grid layout
-                    Events.grid();
-
-                    // assign
-                    plugin.curLayout = "grid";
+                    // get style sheet & start
+                    $("#main-style").attr("href", Layouts.curLayout.css);
+					Layouts.curLayout.start(true);
 
                 });
             }
         };
 
         var plugin = {
-
+			
             // whether the plugin is progress(i.e. waiting for all ajax calls to be loaded)
             inProgress: false,
 
-            // track current layout, default is grid
-            curLayout: "grid",
+            // template function
+            tempFn: null,         
 
             // initialization for the plugin
             init: function(){
 
                 this.inProgress = true;
 
-                Events.onInit();
+                Events.init();
 
-                // run initialization method for each network if enabled
-                var f = false;
-                SocialNetwork.networks.forEach(function(network){
-                    if(options[network].enable === true){
-                        f = true;
-                        plugin[network].init();
-                    }
+                // get template first(if not already), then trigger social media networks
+                this.getTemplate(function(){
+
+                    // run initialization method for each network if enabled
+                    var f = false;
+                    SocialNetwork.networks.forEach(function(network){
+                        if(options[network].enable === true){
+                            f = true;
+                            plugin[network].init();
+                        }
+                    });
+
+                    // if no network passed
+                    if(!f) plugin.complete();
+
                 });
-
-                // if no network passed
-                if(!f) plugin.complete();
-
             },
 
+            // compile template function
+            getTemplate: function(callback){
+                
+                if(plugin.tempFn != null) {
+
+                    return callback();
+                }else{
+
+                    doT.templateSettings.varname = 'post';
+
+                    if(options.template){
+
+                        $.get("templates/" + options.template, function(template_html) {
+                            plugin.tempFn = doT.template(template_html);
+                            return callback();
+                         });
+
+                    }else{
+
+                        plugin.tempFn = doT.template(options.template_html);
+                        return callback();
+                    }
+                }
+            },
+            
             // runs when all social networks have been loaded from ajax calls
             complete: function () {
+				
                 this.inProgress = false;
                 Events.onComplete();
+				Layouts.init();
+
+                if(!Utility.empty(options.callback)){
+                    options.callback();
+                }
             },
 
             twitter:{
@@ -643,25 +670,25 @@
                             break;
                         }
 
-                        postData.userName = post[i].user.name;
-                        postData.userImg = (post[i].user.profile_image_url).replace("_normal","");
+                        postData.user_name = post[i].user.name;
+                        postData.user_image = (post[i].user.profile_image_url).replace("_normal","");
                         postData.time = post[i].created_at;
-                        postData.msg = !Utility.empty(post[i].text)? post[i].text: "";
+                        postData.text = !Utility.empty(post[i].text)? post[i].text: "";
                         postData.url = 'http://twitter.com/' + post[i].user.screen_name + '/status/' + post[i].id_str;
 
                         try{
 
-                            postData.mainImg = post[i].entities.media[0].media_url_https;
-                            postData.mainImgWidth = post[i].entities.media[0].sizes.medium.w;
-                            postData.mainImgHeight = post[i].entities.media[0].sizes.medium.h;
-                            postData.imgView = "with-image";
+                            postData.attachement_src = post[i].entities.media[0].media_url_https;
+                            postData.attachement_width = post[i].entities.media[0].sizes.medium.w;
+                            postData.attachement_height = post[i].entities.media[0].sizes.medium.h;
+                            postData.post_type = "with-image";
 
                         }catch (e){
 
-                            postData.mainImg = "#";
-                            postData.mainImgWidth = 0;
-                            postData.mainImgHeight = 0;
-                            postData.imgView = "no-image";
+                            postData.attachement_src = "#";
+                            postData.attachement_width = 0;
+                            postData.attachement_height = 0;
+                            postData.post_type = "no-image";
 
                         }
 
@@ -698,26 +725,26 @@
                           break;
                         }
 
-                      postData.userName = post[i].actor.displayName;
-                      postData.userImg = post[i].actor.image.url;
-                      postData.userImg = postData.userImg.toString().slice(0, postData.userImg.length-2)+"300";
+                      postData.user_name = post[i].actor.displayName;
+                      postData.user_image = post[i].actor.image.url;
+                      postData.user_image = postData.user_image.toString().slice(0, postData.user_image.length-2)+"300";
                       postData.time = post[i].published;
-                      postData.msg = !Utility.empty(post[i].title)? post[i].title: "";
+                      postData.text = !Utility.empty(post[i].title)? post[i].title: "";
                       postData.url = post[i].url;
 
                       try{
 
-                          postData.mainImg = post[i].object.attachments[0].thumbnails[0].image.url;
-                          postData.mainImgWidth = post[i].object.attachments[0].thumbnails[0].image.width;
-                          postData.mainImgHeight = post[i].object.attachments[0].thumbnails[0].image.height;
-                          postData.imgView = "with-image";
+                          postData.attachement_src = post[i].object.attachments[0].thumbnails[0].image.url;
+                          postData.attachement_width = post[i].object.attachments[0].thumbnails[0].image.width;
+                          postData.attachement_height = post[i].object.attachments[0].thumbnails[0].image.height;
+                          postData.post_type = "with-image";
 
                       }catch(e){
 
-                          postData.mainImg = "#";
-                          postData.mainImgWidth = 0;
-                          postData.mainImgHeight = 0;
-                          postData.imgView = "no-image";
+                          postData.attachement_src = "#";
+                          postData.attachement_width = 0;
+                          postData.attachement_height = 0;
+                          postData.post_type = "no-image";
                       }
 
                       SocialNetwork.render(postData);
@@ -753,24 +780,24 @@
                             break;
                         }
 
-                        postData.userName = post[i].user.username;
-                        postData.userImg = post[i].user.profile_picture;
+                        postData.user_name = post[i].user.user_name;
+                        postData.user_image = post[i].user.profile_picture;
                         postData.time = post[i].created_time;
-                        postData.msg = !Utility.empty(post[i].caption.text)? post[i].caption.text: "";
+                        postData.text = !Utility.empty(post[i].caption.text)? post[i].caption.text: "";
                         postData.url = post[i].link;
 
                         try{
 
-                            postData.mainImg = post[i].images.standard_resolution.url;
-                            postData.mainImgWidth = post[i].images.standard_resolution.width;
-                            postData.mainImgHeight = post[i].images.standard_resolution.height;
-                            postData.imgView = "with-image";
+                            postData.attachement_src = post[i].images.standard_resolution.url;
+                            postData.attachement_width = post[i].images.standard_resolution.width;
+                            postData.attachement_height = post[i].images.standard_resolution.height;
+                            postData.post_type = "with-image";
 
                         }catch (e){
-                            postData.mainImg = "#";
-                            postData.mainImgWidth = 0;
-                            postData.mainImgHeight = 0;
-                            postData.imgView = "no-image";
+                            postData.attachement_src = "#";
+                            postData.attachement_width = 0;
+                            postData.attachement_height = 0;
+                            postData.post_type = "no-image";
                         }
 
                         SocialNetwork.render(postData);
@@ -807,14 +834,14 @@
 
                         if(!Utility.empty(post[i].user)){
 
-                            postData.userName = post[i].user.first_name +" "+post[i].user.last_name;
-                            postData.userImg = post[i].user.photo_medium_rec;
+                            postData.user_name = post[i].user.first_name +" "+post[i].user.last_name;
+                            postData.user_image = post[i].user.photo_medium_rec;
                             postData.url = 'http://vk.com/' + post[i].user.screen_name + '?w=wall-' + post[i].from_id  + '_' + post[i].id;
 
                         }else if(!Utility.empty(post[i].group)){
 
-                            postData.userName = post[i].group.name;
-                            postData.userImg = post[i].group.photo_big;
+                            postData.user_name = post[i].group.name;
+                            postData.user_image = post[i].group.photo_big;
                             postData.url = 'http://vk.com/' + post[i].group.screen_name + '?w=wall-' + post[i].group.gid + '_' + post[i].id;
 
                         }else{
@@ -826,35 +853,35 @@
                         }
 
                         postData.time = post[i].date;
-                        postData.msg  = post[i].text;
+                        postData.text  = post[i].text;
 
                         try{
 
                             if (post[i].attachment.type === 'link'){
-                                postData.mainImg = post[i].attachment.link.image_src;
-                                postData.mainImgWidth = postData.mainImgHeight = 640;
+                                postData.attachement_src = post[i].attachment.link.image_src;
+                                postData.attachement_width = postData.attachement_height = 640;
                             }
                             if (post[i].attachment.type === 'video'){
-                                postData.mainImg = post[i].attachment.video.image_big;
-                                postData.mainImgWidth = postData.mainImgHeight = 640;
+                                postData.attachement_src = post[i].attachment.video.image_big;
+                                postData.attachement_width = postData.attachement_height = 640;
                             }
                             if (post[i].attachment.type === 'photo'){
-                                if(post[i].attachment.photo.src_xxxbig)     postData.mainImg = post[i].attachment.photo.src_xxxbig;
-                                else if(post[i].attachment.photo.src_xxbig) postData.mainImg = post[i].attachment.photo.src_xxbig;
-                                else if(post[i].attachment.photo.src_xbig)  postData.mainImg = post[i].attachment.photo.src_xbig;
-                                else if(post[i].attachment.photo.src_big)   postData.mainImg = post[i].attachment.photo.src_big;
-                                else                                        postData.mainImg = post[i].attachment.photo.src;
+                                if(post[i].attachment.photo.src_xxxbig)     postData.attachement_src = post[i].attachment.photo.src_xxxbig;
+                                else if(post[i].attachment.photo.src_xxbig) postData.attachement_src = post[i].attachment.photo.src_xxbig;
+                                else if(post[i].attachment.photo.src_xbig)  postData.attachement_src = post[i].attachment.photo.src_xbig;
+                                else if(post[i].attachment.photo.src_big)   postData.attachement_src = post[i].attachment.photo.src_big;
+                                else                                        postData.attachement_src = post[i].attachment.photo.src;
 
-                                postData.mainImgWidth = postData.mainImgHeight = post[i].attachment.photo.width;
+                                postData.attachement_width = postData.attachement_height = post[i].attachment.photo.width;
                             }
 
-                            postData.imgView = "with-image";
+                            postData.post_type = "with-image";
 
                         }catch (e){
-                            postData.mainImg = "#";
-                            postData.mainImgWidth = 0;
-                            postData.mainImgHeight = 0;
-                            postData.imgView = "no-image";
+                            postData.attachement_src = "#";
+                            postData.attachement_width = 0;
+                            postData.attachement_height = 0;
+                            postData.post_type = "no-image";
                         }
 
                         SocialNetwork.render(postData);

@@ -1,0 +1,14 @@
+<div class="main-post {{=post.network}} {{=post.post_type}}" date="{{=post.date}}" style="display: none;">
+
+{{? post.attachement_width > 0 && post.attachement_height > 0}}
+    <div class="attachement-div">
+        <img src="{{=post.attachement_src}}" class="main-attachement" width="{{=post.attachement_width}}" height="{{=post.attachement_height}}">
+    </div>
+{{?}}
+    <div class="user-data">
+        <img src="{{=post.user_image}}" class="user-image"><h4 class="user-name">{{=post.user_name}}</h4>
+        <img src="img/{{=post.network}}.png" class="network-image">
+        <div class="post-text" onclick="window.open('{{=post.url}}');"><span>"</span><p>{{=post.text}}</p></div>
+        <p class="post-time"><i class="fa fa-clock-o"></i><span> {{=post.time}}</span></p>
+    </div>
+</div>
