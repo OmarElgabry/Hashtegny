@@ -780,7 +780,7 @@
                             break;
                         }
 
-                        postData.user_name = post[i].user.user_name;
+                        postData.user_name = post[i].user.username;
                         postData.user_image = post[i].user.profile_picture;
                         postData.time = post[i].created_time;
                         postData.text = !Utility.empty(post[i].caption.text)? post[i].caption.text: "";
