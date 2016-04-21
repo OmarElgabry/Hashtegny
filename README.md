@@ -1,4 +1,4 @@
-![Hashtegny](https://raw.githubusercontent.com/OmarElGabry/Hashtegny/master/img/hashtegny.PNG)
+![Hashtegny](https://raw.githubusercontent.com/OmarElGabry/Hashtegny/gh-pages/img/hashtegny.PNG)
 
 # Hashtegny
 
