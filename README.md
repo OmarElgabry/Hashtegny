@@ -44,12 +44,12 @@ npm install hashtegny
 
 Add CSS Files:
 ```html
- <!-- Animation -->
- <link rel="stylesheet" href="css/animations.min.css" type="text/css" />
- <!-- Font Awesome -->
- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
- <!-- Main CSS File(Grid Layout) - Default -->
- <link id="style" rel="stylesheet" href="css/main.grid.css" type="text/css" />
+<!-- Font Awesome -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<!-- Main CSS File -->
+<link rel="stylesheet" href="css/hashtegny.css" type="text/css" />
+<!-- Main CSS File(Grid Layout) - Default -->
+<link id="layout-style" rel="stylesheet" href="css/main.grid.css" type="text/css" />
 ```
 
 Add JS Files:
@@ -77,8 +77,9 @@ Finally, Run the plugin:
 ```js
  <script>
         $(document).ready(function(){
+
             // this line of code because GitHub Pages(or something else weird) changes the link tags to style tags.
-            $("style#main-style").after('<link id="main-style" rel="stylesheet" href="css/main.grid.css" type="text/css" />').remove(); 
+            $("style#layout-style").after('<link id="layout-style" rel="stylesheet" href="css/main.grid.css" type="text/css" />').remove(); 
             
             // start the plugin & pass your options
             $('#hashtegny-container').hashtegny({

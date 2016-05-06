@@ -262,7 +262,7 @@
 
 			animation: {
 				name: "animation",
-				css: "css/main.animation.css",
+				css: ["css/animations.min.css", "css/main.animation.css"],
 				start: function(){
 					var index = 0;
 					var len   = SocialNetwork.posts;
@@ -336,7 +336,7 @@
 
 			grid: {
 				name: "grid",
-				css: "css/main.grid.css",
+				css: ["css/main.grid.css"],
 				start: function(from_toggle){
 				
 					var _options = {itemSelector: '.main-post', gutter: 10, isFitWidth: true};
@@ -563,8 +563,16 @@
                     // assign
                     Layouts.curLayout = Layouts[selectedLayout];
 
-                    // get style sheet & start
-                    $("#main-style").attr("href", Layouts.curLayout.css);
+                    // add style sheets & start
+                    Layouts.curLayout.css.forEach(function(file, i){
+                        if(i == 0){
+                            $("link[id*='layout-style-']").remove();
+                            $("#layout-style").attr("href", file);
+                        }else{
+                            $("#layout-style").after('<link id="layout-style-' + i + '" rel="stylesheet" href="' + file + '" type="text/css" />');
+                        }
+                    });
+
 					Layouts.curLayout.start(true);
 
                 });
