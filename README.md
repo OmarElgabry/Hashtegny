@@ -44,12 +44,12 @@ npm install hashtegny
 
 Add CSS Files:
 ```html
-<!-- Font Awesome -->
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<!-- Main CSS File -->
-<link rel="stylesheet" href="css/hashtegny.css" type="text/css" />
-<!-- Main CSS File(Grid Layout) - Default -->
-<link id="layout-style" rel="stylesheet" href="css/main.grid.css" type="text/css" />
+ <!-- Font Awesome -->
+ <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+ <!-- Main CSS File -->
+ <link rel="stylesheet" href="css/hashtegny.css" type="text/css" />
+ <!-- Main CSS File(Grid Layout) - Default -->
+ <link id="layout-style" rel="stylesheet" href="css/main.grid.css" type="text/css" />
 ```
 
 Add JS Files:
