@@ -67,7 +67,7 @@
         }
 
         // all available social networks
-        SocialNetwork.networks  = ['twitter', 'google', 'instagram', 'vk'];
+        SocialNetwork.networks  = ['twitter', 'google', /*'instagram',*/ 'vk'];
 
         // number of networks to be loaded
         SocialNetwork.networksToLoad = 0;
