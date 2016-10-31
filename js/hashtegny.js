@@ -67,7 +67,7 @@
         }
 
         // all available social networks
-        SocialNetwork.networks  = ['twitter', 'google', /*'instagram',*/ 'vk'];
+        SocialNetwork.networks  = ['twitter', 'google', 'instagram', 'vk'];
 
         // number of networks to be loaded
         SocialNetwork.networksToLoad = 0;
@@ -767,11 +767,11 @@
 
                     var api = "https://api.instagram.com/v1/tags/";
                     var hashtag = Utility.urlencode(options.instagram.hashtag);
-                    var client_id = "394b5154ec8747419546a64b686df10c";
+                    var access_token = "1552620329.ba4c844.7dc13e5dc6bd47f9bc75f4daca2c29f9";
                     var count = options.instagram.count;
 
                     if(Utility.empty(this._instance)){
-                        plugin.instagram._instance = new SocialNetwork("instagram", api + hashtag+"/media/recent/?client_id="+ client_id + "&count="+ count +"&callback=?");
+                        plugin.instagram._instance = new SocialNetwork("instagram", api + hashtag+"/media/recent/?access_token="+ access_token + "&count="+ count +"&callback=?");
                     }
                     plugin.instagram._instance.ajax(this.success);
                 },
