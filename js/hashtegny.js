@@ -820,10 +820,11 @@
 
                     var api = "https://api.vk.com/method/newsfeed.search?q=%23";
                     var hashtag = Utility.urlencode(options.vk.hashtag);
+                    var access_token = "64638c5682af2c975758ad0078bc5801fd8fc1da9841d8274679c45a529aadb8c57f83436cfc6b587e7b4";
                     var count = options.vk.count;
 
                     if(Utility.empty(this._instance)){
-                        plugin.vk._instance = new SocialNetwork("vk", api + hashtag+"&extended=1&count="+ count +"&callback=?");
+                        plugin.vk._instance = new SocialNetwork("vk", api + hashtag + "&access_token="+ access_token + "&extended=1&count="+ count +"&callback=?");
                     }
                     plugin.vk._instance.ajax(this.success);
                 },
