@@ -668,7 +668,7 @@
                 success: function(data){
 
                     var post = data.statuses;
-                    var len  = post.length;
+                    var len  = (post)? post.length: 0;
                     var postData = { network: "twitter" };
                     var _this  = plugin.twitter;
 
@@ -723,7 +723,7 @@
                 success: function(data) {
 
                     var post = data.items;
-                    var len = post.length;
+                    var len  = (post)? post.length: 0;
                     var postData = { network: "google" };
                     var _this  = plugin.google;
 
@@ -778,7 +778,7 @@
                 success: function(data){
 
                     var post = data.data;
-                    var len = post.length;
+                    var len  = (post)? post.length: 0;
                     var postData = { network: "instagram" };
                     var _this  = plugin.instagram;
 
@@ -831,7 +831,7 @@
                 success: function(data){
 
                     var post = data.response;
-                    var len = post.length;
+                    var len  = (post)? post.length: 0;
                     var postData = { network: "vk" };
                     var _this  = plugin.vk;
 
